@@ -15,7 +15,6 @@ namespace Time
     {
         public static List<MeList> listNotFound;
         private String[] people = new String[64];
-        string[] individualDate = new string[512];
         static List<MeList> listToCheck = new List<MeList>();
         public static string start, end;
         private string selectedPerson;
