@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Application = System.Windows.Forms.Application;
-
+//TEST
 namespace Time
 {
     public partial class Form1 : Form
@@ -34,7 +34,6 @@ namespace Time
         Task continues = null;
         public Form1()
         {
-
             InitializeComponent();
         }
         public enum Month
@@ -541,10 +540,10 @@ namespace Time
                 for (int j = 0; j < files[i].Length; j++)
                 {
                     tstr = "";
-                    if (Char.IsLetter(files[i][j]))
+                    if (char.IsLetter(files[i][j]))
                     {
                         tstr += files[i][j];
-                        while ((j + 1) < files[i].Length && Char.IsDigit(files[i][j + 1]))
+                        while ((j + 1) < files[i].Length && char.IsDigit(files[i][j + 1]))
                         {
                             acquired = true;
                             tstr += files[i][j + 1];
