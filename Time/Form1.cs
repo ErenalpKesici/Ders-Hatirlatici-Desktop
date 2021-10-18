@@ -25,7 +25,7 @@ namespace Time
         public static int fl;
         public static Single[] sendListS = new Single[SIZE];
         public static int k, exactLocation = 0, ex = 0;
-        public static string location, selectedPerson;
+        public static string location = Directory.GetCurrentDirectory() + "\\xl", selectedPerson;
         public static bool interval = false, personal = false, comboFilled = false;
         public static string[] hour, topic, classroom, person;
         public Host[] h = new Host[512];
@@ -234,22 +234,44 @@ namespace Time
             if (h.Length > 0)
                 comboFilled = true;
         }
+        private void downloadAndUnzip()
+        {
 
+            WebClient webClient = new WebClient();
+            webClient.DownloadFile(new Uri("https://github.com/ErenalpKesici/Ders-Hatirlatici-Mobil/releases/download/Attachments/xl.zip"), Directory.GetCurrentDirectory() + "\\xl.zip");
+            ZipFile.ExtractToDirectory(Directory.GetCurrentDirectory() + "\\xl.zip", location);
+        }
         private async void Form1_Load(object sender, EventArgs e)
         {
             ntiTray.ContextMenuStrip = new ContextMenuStrip();
             ntiTray.ContextMenuStrip.Items.Add("Kapat", null, close_Click);
             SetLblInfoText("Hazir.");
-            string defaultFile = Directory.GetCurrentDirectory() + "\\" + "Default.txt";
-            if (!File.Exists(defaultFile))
-                File.Create(defaultFile).Close();
+            FileInfo fi = new FileInfo(Directory.GetCurrentDirectory() + "\\xl.zip");
+            if (!fi.Exists)
+                downloadAndUnzip();
             else
-                findLocation();
-            if (location == null || !Directory.Exists(location))
             {
-                MessageBox.Show("Bilgilerin bulundugu klasoru secin");
-                if (!AskForLocation()) Environment.Exit(-1);
+                WebRequest req = WebRequest.Create("https://github.com/ErenalpKesici/Ders-Hatirlatici-Mobil/releases/download/Attachments/xl.zip");
+                req.Method = "HEAD";
+                using (WebResponse resp = req.GetResponse())
+                    if (long.TryParse(resp.Headers.Get("Content-Length"), out long contentLength))
+                        if (fi.Length != contentLength)
+                        {
+                            if (Directory.Exists(Directory.GetCurrentDirectory() + "\\xl"))
+                                Directory.Delete(Directory.GetCurrentDirectory() + "\\xl", true);
+                            downloadAndUnzip();
+                        }
             }
+            //string defaultFile = Directory.GetCurrentDirectory() + "\\" + "Default.txt";
+            //if (!File.Exists(defaultFile))
+            //    File.Create(defaultFile).Close();
+            //else
+            //    findLocation();
+            //if (location == null || !Directory.Exists(location))
+            //{
+            //    MessageBox.Show("Bilgilerin bulundugu klasoru secin");
+            //    if (!AskForLocation()) Environment.Exit(-1);
+            //}
             string[] currentFiles = Directory.GetFiles(location);
             string saveFile = Directory.GetCurrentDirectory() + "\\" + "Save.txt";
             if (!File.Exists(saveFile))
