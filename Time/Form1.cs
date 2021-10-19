@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -230,7 +231,7 @@ namespace Time
             FileInfo fi = new FileInfo(Directory.GetCurrentDirectory() + "\\xl.zip");
             if (!fi.Exists)
                 downloadAndUnzip();
-            else
+            else if(NetworkInterface.GetIsNetworkAvailable())
             {
                 WebRequest req = WebRequest.Create("https://github.com/ErenalpKesici/Ders-Hatirlatici-Mobil/releases/download/Attachments/xl.zip");
                 req.Method = "HEAD";
@@ -245,16 +246,6 @@ namespace Time
                             downloadAndUnzip();
                         }
             }
-            //string defaultFile = Directory.GetCurrentDirectory() + "\\" + "Default.txt";
-            //if (!File.Exists(defaultFile))
-            //    File.Create(defaultFile).Close();
-            //else
-            //    findLocation();
-            //if (location == null || !Directory.Exists(location))
-            //{
-            //    MessageBox.Show("Bilgilerin bulundugu klasoru secin");
-            //    if (!AskForLocation()) Environment.Exit(-1);
-            //}
             string[] currentFiles = Directory.GetFiles(location);
             string saveFile = Directory.GetCurrentDirectory() + "\\" + "Save.txt";
             if (!File.Exists(saveFile))
