@@ -262,47 +262,26 @@ namespace Time
                     sr.Close();
                     await Task.Run(() => OpenExcel());
                 }
-                else //check for new files
+                else //read the save file
                 {
-                    //string[] readFiles = savedFiles.Split('*');
-                    //List<string> newFiles = new List<string>();
-                    //for (int i = 0; i < currentFiles.Length; i++)
-                    //{
-                    //    string[] file = currentFiles[i].Split('\\');
-                    //    if (file[file.Length - 1][0] == '~') continue;
-                    //    int cnt = 0;
-                    //    for (int j = 0; j < readFiles.Length - 1; j++)
-                    //        if (file[file.Length - 1] != readFiles[j])
-                    //            cnt++;
-                    //    if (cnt == readFiles.Length - 1)
-                    //        newFiles.Add(file[file.Length - 1]);
-                    //}
-                    //if (newFiles.Count > 0)
-                    //{
-                    //    sr.Close();
-                    //    await Task.Run(() => OpenExcel());
-                    //}
-                    //else //read from txt
-                    //{
-                        string read;
-                        int cnt = -1, j = 1;
-                        while ((read = sr.ReadLine()) != null)
+                    string read;
+                    int cnt = -1, j = 1;
+                    while ((read = sr.ReadLine()) != null)
+                    {
+                        string[] single = read.Split('*');
+                        if (cnt > -1 && s[cnt].date[0].Date == ExtractDateTime(single[0]).Date && s[cnt].classroom == single[1])
                         {
-                            string[] single = read.Split('*');
-                            if (cnt > -1 && s[cnt].date[0].Date == ExtractDateTime(single[0]).Date && s[cnt].classroom == single[1])
-                            {
-                                s[cnt].SetAll(j++, ExtractDateTime(single[0]), single[2], single[3], single[4]);
-                            }
-                            else
-                            {
-                                j = 1;
-                                s[++cnt] = new Single(single[1]);
-                                s[cnt].SetAll(0, ExtractDateTime(single[0]), single[2], single[3], single[4]);
-                            }
-
+                            s[cnt].SetAll(j++, ExtractDateTime(single[0]), single[2], single[3], single[4]);
                         }
-                        sr.Close();
-                    //}
+                        else
+                        {
+                            j = 1;
+                            s[++cnt] = new Single(single[1]);
+                            s[cnt].SetAll(0, ExtractDateTime(single[0]), single[2], single[3], single[4]);
+                        }
+
+                    }
+                    sr.Close();
                 }
             }
             FillPeople();
