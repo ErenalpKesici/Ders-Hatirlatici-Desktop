@@ -162,7 +162,7 @@
             this.Controls.Add(this.button1);
             this.Name = "FindSum";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FindTotal";
+            this.Text = "Toplam Ders";
             this.Load += new System.EventHandler(this.Find_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

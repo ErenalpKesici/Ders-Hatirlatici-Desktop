@@ -217,7 +217,7 @@
             this.Controls.Add(this.btnNoMatch);
             this.Name = "Check";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Check";
+            this.Text = "Video Kontrol";
             this.Load += new System.EventHandler(this.Check_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

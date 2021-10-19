@@ -89,8 +89,8 @@ namespace Time
             List<string> directs = GetDirects();
             if (chkInnerDelete.Checked)
             {
-                if (Form1.location == "")
-                    Form1.findLocation();
+                //if (Form1.location == "")
+                //    Form1.findLocation();
                 int delCount = 0;
                 long totalSize = 0, deletedSize = 0;
                 foreach (string directory in directs)
@@ -132,8 +132,8 @@ namespace Time
             if (chkDelete.Checked)
             {
                 directs = GetDirects();
-                if (Form1.location == "")
-                    Form1.findLocation();
+                //if (Form1.location == "")
+                //    Form1.findLocation();
                 string[] dirs = Directory.GetDirectories(Form1.location);
                 int nDeleted = 0;
                 long dirByte;
@@ -161,8 +161,8 @@ namespace Time
             if (chkFix.Checked)
             {
                 directs = GetDirects();
-                if (Form1.location == "")
-                    Form1.findLocation();
+                //if (Form1.location == "")
+                //    Form1.findLocation();
                 foreach (string directory in directs)
                 {
                     string[] dir = directory.Split('\\');
@@ -208,8 +208,8 @@ namespace Time
         }
         private void btnNoMatch_Click(object sender, EventArgs e)
         {
-            if (Form1.location == "")
-                Form1.findLocation();
+            //if (Form1.location == "")
+            //    Form1.findLocation();
             List<string> directs = GetDirects();
             listToCheck = new List<MeList>();
             for (int i = 0; Form1.s[i] != null; i++)

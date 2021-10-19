@@ -54,12 +54,6 @@ namespace Time
         {
             Application.Exit();
         }
-        public static void findLocation()
-        {
-            StreamReader sr = new StreamReader("Default.txt");
-            location = sr.ReadLine();
-            sr.Close();
-        }
         public static string WhichMonth(Month month)
         {
             switch (month)
@@ -140,21 +134,8 @@ namespace Time
             }
             return nstr;
         }
-        private bool AskForLocation()
-        {
-            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
-            {
-                location = folderBrowserDialog1.SelectedPath;
-                StreamWriter sw = new StreamWriter("Default.txt");
-                sw.WriteLine(location);
-                sw.Close();
-                return true;
-            }
-            return false;
-        }
         private void dosyaToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            AskForLocation();
         }
         private void close_Click(object sender, EventArgs e)
         {
@@ -259,6 +240,8 @@ namespace Time
                         {
                             if (Directory.Exists(Directory.GetCurrentDirectory() + "\\xl"))
                                 Directory.Delete(Directory.GetCurrentDirectory() + "\\xl", true);
+                            if (File.Exists(Directory.GetCurrentDirectory() + "\\Save.txt"))
+                                File.Delete(Directory.GetCurrentDirectory() + "\\Save.txt");
                             downloadAndUnzip();
                         }
             }
@@ -290,26 +273,26 @@ namespace Time
                 }
                 else //check for new files
                 {
-                    string[] readFiles = savedFiles.Split('*');
-                    List<string> newFiles = new List<string>();
-                    for (int i = 0; i < currentFiles.Length; i++)
-                    {
-                        string[] file = currentFiles[i].Split('\\');
-                        if (file[file.Length - 1][0] == '~') continue;
-                        int cnt = 0;
-                        for (int j = 0; j < readFiles.Length - 1; j++)
-                            if (file[file.Length - 1] != readFiles[j])
-                                cnt++;
-                        if (cnt == readFiles.Length - 1)
-                            newFiles.Add(file[file.Length - 1]);
-                    }
-                    if (newFiles.Count > 0)
-                    {
-                        sr.Close();
-                        await Task.Run(() => OpenExcel());
-                    }
-                    else //read from txt
-                    {
+                    //string[] readFiles = savedFiles.Split('*');
+                    //List<string> newFiles = new List<string>();
+                    //for (int i = 0; i < currentFiles.Length; i++)
+                    //{
+                    //    string[] file = currentFiles[i].Split('\\');
+                    //    if (file[file.Length - 1][0] == '~') continue;
+                    //    int cnt = 0;
+                    //    for (int j = 0; j < readFiles.Length - 1; j++)
+                    //        if (file[file.Length - 1] != readFiles[j])
+                    //            cnt++;
+                    //    if (cnt == readFiles.Length - 1)
+                    //        newFiles.Add(file[file.Length - 1]);
+                    //}
+                    //if (newFiles.Count > 0)
+                    //{
+                    //    sr.Close();
+                    //    await Task.Run(() => OpenExcel());
+                    //}
+                    //else //read from txt
+                    //{
                         string read;
                         int cnt = -1, j = 1;
                         while ((read = sr.ReadLine()) != null)
@@ -328,7 +311,7 @@ namespace Time
 
                         }
                         sr.Close();
-                    }
+                    //}
                 }
             }
             FillPeople();
@@ -350,7 +333,6 @@ namespace Time
 
         private void secilenKlasorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            findLocation();
             Process.Start(location);
         }
 
@@ -515,7 +497,6 @@ namespace Time
         {
             SetLblInfoText("Dosyalar Okunuyor...");
             SetCursor(true);
-            findLocation();
             string[] dFiles = Directory.GetFiles(location);
             string[] files = new string[128];
             string[] tmpString = new string[dFiles.Length];

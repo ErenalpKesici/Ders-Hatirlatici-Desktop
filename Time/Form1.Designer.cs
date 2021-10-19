@@ -39,7 +39,7 @@
             this.btnList = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.dosyaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dosyaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.programKlasorunuAcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.secilenKlasorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cikisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -60,7 +60,6 @@
             this.cbRemind = new System.Windows.Forms.CheckBox();
             this.lblRemind = new System.Windows.Forms.Label();
             this.btnRefresh = new System.Windows.Forms.Button();
-            this.programKlasorunuAcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -175,7 +174,6 @@
             // dosyaToolStripMenuItem
             // 
             this.dosyaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.dosyaToolStripMenuItem1,
             this.programKlasorunuAcToolStripMenuItem,
             this.secilenKlasorToolStripMenuItem,
             this.cikisToolStripMenuItem});
@@ -183,18 +181,18 @@
             this.dosyaToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.dosyaToolStripMenuItem.Text = "Ozellikler";
             // 
-            // dosyaToolStripMenuItem1
+            // programKlasorunuAcToolStripMenuItem
             // 
-            this.dosyaToolStripMenuItem1.Name = "dosyaToolStripMenuItem1";
-            this.dosyaToolStripMenuItem1.Size = new System.Drawing.Size(193, 22);
-            this.dosyaToolStripMenuItem1.Text = "Klasor Sec";
-            this.dosyaToolStripMenuItem1.Click += new System.EventHandler(this.dosyaToolStripMenuItem1_Click);
+            this.programKlasorunuAcToolStripMenuItem.Name = "programKlasorunuAcToolStripMenuItem";
+            this.programKlasorunuAcToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.programKlasorunuAcToolStripMenuItem.Text = "Program Klasorunu Ac";
+            this.programKlasorunuAcToolStripMenuItem.Click += new System.EventHandler(this.programKlasorunuAcToolStripMenuItem_Click);
             // 
             // secilenKlasorToolStripMenuItem
             // 
             this.secilenKlasorToolStripMenuItem.Name = "secilenKlasorToolStripMenuItem";
             this.secilenKlasorToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
-            this.secilenKlasorToolStripMenuItem.Text = "Secilen Klasoru Ac";
+            this.secilenKlasorToolStripMenuItem.Text = "Excel Klasorunu Ac";
             this.secilenKlasorToolStripMenuItem.Click += new System.EventHandler(this.secilenKlasorToolStripMenuItem_Click);
             // 
             // cikisToolStripMenuItem
@@ -392,13 +390,6 @@
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
-            // programKlasorunuAcToolStripMenuItem
-            // 
-            this.programKlasorunuAcToolStripMenuItem.Name = "programKlasorunuAcToolStripMenuItem";
-            this.programKlasorunuAcToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
-            this.programKlasorunuAcToolStripMenuItem.Text = "Program Klasorunu Ac";
-            this.programKlasorunuAcToolStripMenuItem.Click += new System.EventHandler(this.programKlasorunuAcToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -455,7 +446,6 @@
         private System.Windows.Forms.ToolStripMenuItem dosyaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cikisToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.ToolStripMenuItem dosyaToolStripMenuItem1;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog2;
         private System.Windows.Forms.Label lblStart;
