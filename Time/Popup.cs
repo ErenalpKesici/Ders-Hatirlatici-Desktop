@@ -69,7 +69,7 @@ namespace Time
             dataGridView1.AutoSize = true;
             for (int i = 0; Form1.sendListS[i] != null; i++)
             {
-                for (int j = 0; Form1.sendListS[i].date[j] != DateTime.MinValue; j++)
+                for (int j = 0; j < Form1.sendListS[i].date.Count && Form1.sendListS[i].date[j] != DateTime.MinValue; j++)
                 {
                     n = dataGridView1.Rows.Add();
                     dataGridView1.Rows[rows].Cells[0].Value = Form1.sendListS[i].date[j];

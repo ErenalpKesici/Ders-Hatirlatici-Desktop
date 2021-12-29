@@ -19,8 +19,7 @@ namespace Time
     {
         private static int SIZE = 256;
         public static string DATE_FORMAT = "d MMMM yyyy - HH:mm - dddd";
-        public static Single[] s = new Single[SIZE];
-        int count = 0;
+        public static  Single[] s = new Single[SIZE];
         public static string time, start, end;
         public static string[] sFiles = new string[SIZE];
         public static int fl;
@@ -94,16 +93,15 @@ namespace Time
             interval = true;
             for (int i = 0; s[i] != null; i++)
             {
-                if ((!chkInterval.Checked && s[i].date[0].Date.CompareTo(dtpStart.Value.Date) == 0) || chkInterval.Checked && s[i].date[0].Date.CompareTo(dtpStart.Value.Date) > -1 && s[i].date[0].Date.CompareTo(dtpEnd.Value.Date) < 0)
+                if ((!chkInterval.Checked && s[i].date[0].Date.CompareTo(dtpStart.Value.Date) == 0) || chkInterval.Checked && s[i].date[0].Date.CompareTo(dtpStart.Value.Date) > -1 && s[i].date[0].Date.CompareTo(dtpEnd.Value.Date) < 1)
                 {
                     sendListS[k] = new Single(s[i].classroom);
-                    int cnt = 0;
-                    for (int j = 0; j < s[i].date.Length && s[i].date[j] != DateTime.MinValue; j++)
+                    for (int j = 0; j < s[i].date.Count && s[i].date[j] != DateTime.MinValue; j++)
                     {
                         if (s[i].person[j] == "-" || (cbxPerson.SelectedIndex > 0 && !s[i].person[j].Equals(selectedPerson))) continue;
-                        sendListS[k].SetAll(cnt++, s[i].date[j], s[i].topic[j], s[i].person[j], s[i].type[j]);
+                        sendListS[k].SetAll(s[i].date[j], s[i].topic[j], s[i].person[j], s[i].type[j]);
                     }
-                    if (cnt != 0) k++;
+                    k++;
                 }
             }
             if (k == 0)
@@ -189,7 +187,7 @@ namespace Time
             bool exists = false;
             for (int i = 0; s[i] != null; i++)
             {
-                for (int j = 0; j < Form1.s[i].person.Length && Form1.s[i].person[j] != null; j++)
+                for (int j = 0; j < Form1.s[i].person.Count && Form1.s[i].person[j] != null; j++)
                 {
                     if (Form1.s[i].person[j] == null || Form1.s[i].person[j] == "-")
                         continue;
@@ -265,19 +263,18 @@ namespace Time
                 else //read the save file
                 {
                     string read;
-                    int cnt = -1, j = 1;
+                    int cnt = -1;
                     while ((read = sr.ReadLine()) != null)
                     {
                         string[] single = read.Split('*');
                         if (cnt > -1 && s[cnt].date[0].Date == ExtractDateTime(single[0]).Date && s[cnt].classroom == single[1])
                         {
-                            s[cnt].SetAll(j++, ExtractDateTime(single[0]), single[2], single[3], single[4]);
+                            s[cnt].SetAll(ExtractDateTime(single[0]), single[2], single[3], single[4]);
                         }
                         else
                         {
-                            j = 1;
                             s[++cnt] = new Single(single[1]);
-                            s[cnt].SetAll(0, ExtractDateTime(single[0]), single[2], single[3], single[4]);
+                            s[cnt].SetAll(ExtractDateTime(single[0]), single[2], single[3], single[4]);
                         }
 
                     }
@@ -349,16 +346,15 @@ namespace Time
                 int comparison = s[i].date[0].Date.CompareTo(DateTime.Now.Date);
                 if (comparison != -1)
                 {
-                    int k = 0, innerK;
-                    for (int j = 0; j < s[i].date.Length && s[i].date[j] != DateTime.MinValue; j++)
+                    int k = 0;
+                    for (int j = 0; j < s[i].date.Count && s[i].date[j] != DateTime.MinValue; j++)
                     {
-                        innerK = 0;
                         if (comparison == 0 && s[i].date[j].Hour > DateTime.Now.Hour && s[i].date[j].Hour - DateTime.Now.Hour < 2)
                         {
                             if (cbxPerson.SelectedIndex == 0 || (cbxPerson.SelectedIndex > 0 && cbxPerson.SelectedItem.ToString() == s[i].person[j]))
                             {
                                 sendListS[k] = new Single(s[i].classroom);
-                                sendListS[k++].SetAll(innerK++, s[i].date[j], s[i].topic[j], s[i].person[j], s[i].type[j]);
+                                sendListS[k++].SetAll(s[i].date[j], s[i].topic[j], s[i].person[j], s[i].type[j]);
                                 cts.Cancel();
                                 int msLeft = Convert.ToInt32((s[i].date[j].Subtract(DateTime.Now)).TotalMilliseconds);
                                 if (msLeft < 0)
@@ -544,36 +540,59 @@ namespace Time
             }
             sw.WriteLine();
             sw.Close();
-            int tmp = 0, ignore = 1;
+            int count = 0;
             for (int ov = 0; ov < e.Length; ov++)
             {
                 SetLblInfoText(e[ov].path);
-                count = tmp;
-                string sTmp;
-                for (int i = 1; (sTmp = e[ov].ReadCell(i, 1).ToString()) != ""; i += 7, count++, ignore = 1)
+                for (int i = 1; e[ov].ReadCell(i, 1).ToString() != "";i++)
                 {
-                    s[count] = new Single(tmpString[ov]);
-                    string[] dates = sTmp.Split(' ');
-                    string currentTime;
-                    for (int j = i + 1; (j - i - 1 < 6) && (currentTime = e[ov].ReadCell(j, 1).ToString()) != ""; j++)
+                    string currentCell = e[ov].ReadCell(i, 1).ToString();
+                    int lastJ = 0;
+                    if(s[count] != null)
+                        count++;
+                    string[] dates = currentCell.Split(' ');
+                    for (int j = i + 1; (currentCell =  e[ov].ReadCell(j, 1).ToString()).Contains("."); j++) 
                     {
-                        if (e[ov].ReadCell(j, 6) == "-")
-                        {
-                            ignore++;
-                            continue;
-                        }
-                        s[count].SetAll(j - i - ignore, new DateTime(Convert.ToInt32(dates[2]), Convert.ToInt32(WhichMonth((Month)Enum.Parse(typeof(Month), dates[1]))), Convert.ToInt32(dates[0]), Convert.ToInt32(Convert.ToDouble(currentTime) * 24), 0, 0), e[ov].ReadCell(j, 3).ToString(), e[ov].ReadCell(j, 6).ToString().Split('-')[1].Trim(), e[ov].ReadCell(j, 4).ToString());
+                        lastJ++;
+                        if (e[ov].ReadCell(j, 6).ToString() == "-") continue;
+                        if(s[count] == null)
+                            s[count] = new Single(tmpString[ov]);
+                        s[count].SetAll(new DateTime(Convert.ToInt32(dates[2]), Convert.ToInt32(WhichMonth((Month)Enum.Parse(typeof(Month), dates[1]))), Convert.ToInt32(dates[0]), Convert.ToInt32(Convert.ToDouble(currentCell) * 24), 0, 0), e[ov].ReadCell(j, 3).ToString(), e[ov].ReadCell(j, 6).ToString(), e[ov].ReadCell(j, 4).ToString());
+                        //Console.WriteLine(count+": " + dates[0] + dates[1]+dates[2]+"  and  " + new DateTime(Convert.ToInt32(dates[2]), Convert.ToInt32(WhichMonth((Month)Enum.Parse(typeof(Month), dates[1]))), Convert.ToInt32(dates[0]), Convert.ToInt32(Convert.ToDouble(currentCell) * 24), 0, 0));
+                        //Console.WriteLine(s[count-1].date[0]);
                     }
+                    i += lastJ;
+                    //sTmp = e[ov].ReadCell(i + readSingle, 1).ToString();
+                    //string[] dates = sTmp.Split(' ');
+                    //string currentTime;
+                    //bool created = false;
+                    //for (int j = i + 2; (currentTime = e[ov].ReadCell(j, 1).ToString()) != "" && currentTime.Contains("."); j++)
+                    //{
+                    //    readSingle++;
+                    //    if (e[ov].ReadCell(j, 6) == "-")
+                    //    {
+                    //        continue;
+                    //    }
+                    //    if(!created)
+                    //    {
+                    //        s[++count] = new Single(tmpString[ov]);
+                    //        created = true;
+                    //    }
+                    //    s[count].SetAll(new DateTime(Convert.ToInt32(dates[2]), Convert.ToInt32(WhichMonth((Month)Enum.Parse(typeof(Month), dates[1]))), Convert.ToInt32(dates[0]), Convert.ToInt32(Convert.ToDouble(currentTime) * 24), 0, 0), e[ov].ReadCell(j, 3).ToString(), e[ov].ReadCell(j, 6).ToString().Split('-')[1].Trim(), e[ov].ReadCell(j, 4).ToString());
+                    //}
                 }
-                tmp = count;
+
                 e[ov].Quit();
             }
-            List<Single> nS = new List<Single>();
+            Console.WriteLine();
+                List<Single> nS = new List<Single>();
             for(int i = 0; s[i] != null; i++)
-                if (s[i].date[0] != DateTime.MinValue && s[i] != null)
+                if (s[i].date[0] != DateTime.MinValue)
                     nS.Add(s[i]);
             s = nS.ToArray();
             Array.Sort(s, (a, b) => a.date[0].CompareTo(b.date[0]));
+
+           
             Single[] expandedS = new Single[SIZE];
             for (int i = 0; i < SIZE; i++)
             {
@@ -582,7 +601,10 @@ namespace Time
                 expandedS[i] = s[i];
             }
             s = expandedS;
-            SaveAll(s);
+            SaveAll(s); for (int i = 0; s[i] != null; i++)
+            {
+                Console.WriteLine(s[i].date[0].Month + " " + s[i].date[0].Day);
+            }
             SetCursor(false);
             SetLblInfoText("Tamamlandi.");
         }
@@ -592,7 +614,7 @@ namespace Time
             StreamWriter sw = new StreamWriter("Save.txt", true);
             for(int i =0;s[i] != null;i++)
             {
-                for (int j = 0; s[i].date[j] != DateTime.MinValue; j++)
+                for (int j = 0; j < s[i].date.Count && s[i].date[j] != DateTime.MinValue; j++)
                     sw.WriteLine(s[i].date[j].Day+"/"+ s[i].date[j].Month+ "/"+s[i].date[j].Year+" "+ s[i].date[j].Hour + "*" + s[i].classroom+"*"+ s[i].topic[j]+"*"+ s[i].person[j]+"*"+s[i].type[j]);
             }
             sw.Close();
@@ -611,15 +633,15 @@ namespace Time
                 int comparison = s[i].date[0].Date.CompareTo(dateCompared.Date);
                 if (comparison != -1)
                 {
-                    int k = 0, innerK = 0;
-                    for (int j = 0; j < s[i].date.Length && s[i].date[j] != DateTime.MinValue; j++)
+                    int k = 0;
+                    for (int j = 0; j < s[i].date.Count && s[i].date[j] != DateTime.MinValue; j++)
                     {
                         if ((rbNow.Checked && comparison == 0 && s[i].date[j].Hour == dateCompared.Hour) || rbClosest.Checked && ((comparison == 0 && s[i].date[j].Hour > dateCompared.Hour) || (comparison == 1)))
                         {
                             if (cbxPerson.SelectedIndex == 0 || (cbxPerson.SelectedIndex > 0 && cbxPerson.SelectedItem.ToString() == s[i].person[j]))
                             {
                                 sendListS[k] = new Single(s[i].classroom);
-                                sendListS[k++].SetAll(innerK++, s[i].date[j], s[i].topic[j], s[i].person[j], s[i].type[j]);
+                                sendListS[k++].SetAll(s[i].date[j], s[i].topic[j], s[i].person[j], s[i].type[j]);
                                 found = true;
                                 p = new Popup(Convert.ToInt32(s[i].date[j].Subtract(dateCompared).TotalMilliseconds), false);
                                 p.Show();
@@ -634,21 +656,29 @@ namespace Time
         }
         public class Single
         {
-            public DateTime[] date = new DateTime[12];
-            public string[] topic = new string[12];
-            public string[] person = new string[12];
-            public string[] type = new string[12];
+            public List<DateTime> date = new List<DateTime>();
+            public List<string> topic = new List<string>();
+            public List<string> person = new List<string>();
+            public List<string> type = new List<string>();
             public string classroom;
             public Single(string classroom) {
                 this.classroom = classroom;
             }
-            public void SetAll(int at, DateTime date, string topic, string person, string type)
+            public void SetAll(DateTime date, string topic, string person, string type)
             {
-                this.date[at] = date;
-                this.topic[at] = topic;
-                this.person[at] = person;
-                this.type[at] = type;
+                this.date.Add(date);
+                this.topic.Add(topic);
+                this.person.Add(person);
+                this.type.Add(type);
             }
+            //public void SetAllAt(int at, DateTime date, string topic, string person, string type)
+            //{
+            //    this.date[at] = date;
+            //    this.topic[at] = topic;
+            //    this.person[at] = person;
+            //    this.type[at] = type;
+            //}
+
         }
         public class Host
         {

@@ -30,7 +30,7 @@ namespace Time
             dataGridView1.AutoSize = true;
             for (int i = 0; i < Form1.k; i++)
             {
-                for (int j = 0; j < Form1.sendListS[i].date.Length && Form1.sendListS[i].date[j] != DateTime.MinValue; j++)
+                for (int j = 0; j < Form1.sendListS[i].date.Count && Form1.sendListS[i].date[j] != DateTime.MinValue; j++)
                 {
                     n = dataGridView1.Rows.Add();
                     if (Form1.sendListS[i].type[j] == "ÖE")

@@ -26,7 +26,7 @@ namespace Time
             bool exists = false;
             for (int i = 0; Form1.s[i] != null; i++)
             {
-                for (int j = 0; j < Form1.s[i].person.Length; j++)
+                for (int j = 0; j < Form1.s[i].person.Count; j++)
                 {
                     if (Form1.s[i].person[j] == null || Form1.s[i].person[j] == "-")
                         continue;
@@ -70,7 +70,7 @@ namespace Time
             {
                 for (int i = 0; Form1.s[i] != null; i++)
                 {
-                    for (int j = 0; j < Form1.s[i].person.Length && Form1.s[i] != null; j++)
+                    for (int j = 0; j < Form1.s[i].person.Count && Form1.s[i] != null; j++)
                     {
                         if (Form1.s[i].person[j] == null)
                             continue;
@@ -90,7 +90,7 @@ namespace Time
                 for (int i = 0; Form1.s[i] != null; i++)
                 {
                     if (Form1.s[i].date[0].Date.CompareTo(dtpAfter.Value.Date) > -1)
-                        for (int j = 0; j < Form1.s[i].person.Length && Form1.s[i] != null; j++)
+                        for (int j = 0; j < Form1.s[i].person.Count && Form1.s[i] != null; j++)
                         {
                             for (int t = 0; h[t] != null; t++)
                             {
