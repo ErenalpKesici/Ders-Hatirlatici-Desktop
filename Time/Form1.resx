@@ -117,6 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnList.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAZdEVYdFNvZnR3YXJlAEFkb2JlIEltYWdlUmVhZHlxyWU8AAAARHRFWHRDb3B5cmlnaHQAQ3Jl
+        YXRpdmUgQ29tbW9ucyBBdHRyaWJ1dGlvbiBOb24tQ29tbWVyY2lhbCBObyBEZXJpdmF0aXZlc3vdsKAA
+        AADsSURBVEhL7dNNioRADAXgICLiqlci+LdXRNSL1JG8QR3NI6UT0FA8ZpOBYXrRBR88eZBsDP352/c9
+        HMdxPuT7dVfavdLOS2fTtm0Mznu+dhE6N1rXlYEtkByhc6NlWRjYAs3QudE0TZfgxzzP4Z5PmtPuF657
+        1Pf95xuGIYzjeD7k2w5Nc9p56Wzq+56B/aZd18Ufehdq25aBLZAcoXOjpmkY2ALN0LlRXdeX4IQdmmbo
+        vL6H9gmvqqogzoQdmmbovAKVZcnAflPJETo3KoqCgS2QHKFzozzPGdgCzdC5UZZll+CEHZpm6Jyy6w3h
+        Ony/0Z71jgAAAABJRU5ErkJggg==
+</value>
+  </data>
   <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
@@ -132,10 +145,18 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>610, 17</value>
   </metadata>
+  <data name="BUL.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACYSURBVFhH7Y5BDsIwEMTy/0+D9kAVCbcl47KAhCXfMt6M
+        P7/A7UXfAh068jIovqKCgokxFCv3oLdlBIXKM2hTLmMiZrthA3avA3avA3avA3avA3avA3b/FFiJmO0G
+        RcozaFNGUKjcg96WMRRLjaFYqoKCiQoKJl7GUXA+SLZAh2dboMOzLdDh2Rbo8MM26HjZysc/8K2McQf0
+        JijmppdyvAAAAABJRU5ErkJggg==
+</value>
+  </data>
   <metadata name="ntiTray.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>707, 17</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="ntiTray.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAICAAAAEAIACoEAAAFgAAACgAAAAgAAAAQAAAAAEAIAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA

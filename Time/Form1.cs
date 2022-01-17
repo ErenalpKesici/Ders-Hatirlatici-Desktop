@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -7,6 +8,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,6 +33,7 @@ namespace Time
         public Host[] h = new Host[512];
         CancellationTokenSource cts = new CancellationTokenSource();
         public static int minBeforeRemind;
+        string prefLocation = Directory.GetCurrentDirectory() + "\\" + "Preferences.json";
         Task continues = null;
         public Form1()
         {
@@ -99,6 +102,7 @@ namespace Time
                     for (int j = 0; j < s[i].date.Count && s[i].date[j] != DateTime.MinValue; j++)
                     {
                         if (s[i].person[j] == "-" || (cbxPerson.SelectedIndex > 0 && !s[i].person[j].Equals(selectedPerson))) continue;
+                        Debug.WriteLine(i);
                         sendListS[k].SetAll(s[i].date[j], s[i].topic[j], s[i].person[j], s[i].type[j]);
                     }
                     k++;
@@ -119,10 +123,6 @@ namespace Time
             this.Close();
         }
 
-        private void rebuildToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OpenExcel();
-        }
 
         public static string reverse(string str)
         {
@@ -216,10 +216,82 @@ namespace Time
         }
         private void downloadAndUnzip()
         {
-
             WebClient webClient = new WebClient();
             webClient.DownloadFile(new Uri("https://github.com/ErenalpKesici/Ders-Hatirlatici-Mobil/releases/download/Attachments/xl.zip"), Directory.GetCurrentDirectory() + "\\xl.zip");
             ZipFile.ExtractToDirectory(Directory.GetCurrentDirectory() + "\\xl.zip", location);
+        }
+        private void readPreferences()
+        {
+            if (!File.Exists(prefLocation))
+                File.Create(prefLocation).Close();
+            else
+            {
+                Preference pref = JsonConvert.DeserializeObject<Preference>(File.ReadAllText(prefLocation));
+                cbxPerson.Text = pref.person;
+                chkInterval.Checked = pref.interval;
+                cbRemind.Checked = pref.remind;
+                cbxRemind.Text = pref.remindBefore.ToString();
+                if (pref.now)
+                {
+                    rbNow.Checked = true;
+                }
+                else
+                {
+                    rbClosest.Checked = true;
+                }
+            }
+        }
+        protected virtual bool IsFileLocked(FileInfo file)
+        {
+            try
+            {
+                using (FileStream stream = file.Open(FileMode.Open, FileAccess.Read, FileShare.None))
+                {
+                    stream.Close();
+                }
+            }
+            catch (IOException e)
+            {
+                if(!e.Message.Contains("Could not find file"))
+                    return true;
+            }
+            return false;
+        }
+        private void CheckForUpdates()
+        {
+            WebClient webClient = new WebClient();
+            string updatePath = Path.GetTempPath() + "\\ders_hatirlatici_update.exe"; ;
+            string currentPath = Directory.GetCurrentDirectory() + "\\version.txt";
+            if (!File.Exists(currentPath))
+            {
+                FileVersionInfo currentInfo = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location);
+                File.WriteAllText(currentPath, currentInfo.ProductVersion);
+            }
+            if (!IsFileLocked(new FileInfo(updatePath)))
+            {
+                webClient.DownloadFile(new Uri("https://github.com/ErenalpKesici/Ders-Hatirlatici-Desktop/releases/download/v1/ders_hatirlatici_update.exe"), updatePath);
+                string current = File.ReadAllText(Directory.GetCurrentDirectory() + "\\version.txt");
+                FileVersionInfo updateInfo = FileVersionInfo.GetVersionInfo(updatePath);
+                Version updateVer = new Version(updateInfo.ProductVersion);
+                Version currentVer = new Version(current);
+                if (updateVer > currentVer)
+                {
+                    Process cmd = new Process();
+                    cmd.StartInfo.FileName = "cmd.exe";
+                    cmd.StartInfo.RedirectStandardInput = true;
+                    cmd.StartInfo.RedirectStandardOutput = true;
+                    cmd.StartInfo.CreateNoWindow = true;
+                    cmd.StartInfo.UseShellExecute = false;
+                    cmd.Start();
+                    cmd.StandardInput.WriteLine("cd /d " + Path.GetTempPath());
+                    cmd.StandardInput.WriteLine("ders_hatirlatici_update.exe /VERYSILENT");
+                    cmd.StandardInput.Flush();
+                    cmd.StandardInput.Close();
+                    cmd.WaitForExit();
+                    File.WriteAllText(currentPath, updateVer.ToString());
+                    Environment.Exit(0);
+                }
+            }
         }
         private async void Form1_Load(object sender, EventArgs e)
         {
@@ -227,11 +299,13 @@ namespace Time
             ntiTray.ContextMenuStrip.Items.Add("Kapat", null, close_Click);
             SetLblInfoText("Hazir.");
             FileInfo fi = new FileInfo(Directory.GetCurrentDirectory() + "\\xl.zip");
+            if (NetworkInterface.GetIsNetworkAvailable())
+                CheckForUpdates();
             if (!fi.Exists)
                 downloadAndUnzip();
             else if(NetworkInterface.GetIsNetworkAvailable())
-            {
-                WebRequest req = WebRequest.Create("https://github.com/ErenalpKesici/Ders-Hatirlatici-Mobil/releases/download/Attachments/xl.zip");
+            { 
+                WebRequest req = WebRequest.Create("https://github.com/ErenalpKesici/Ders-Hatirlatici-Mobile/releases/download/Attachments/xl.zip");
                 req.Method = "HEAD";
                 using (WebResponse resp = req.GetResponse())
                     if (long.TryParse(resp.Headers.Get("Content-Length"), out long contentLength))
@@ -282,6 +356,7 @@ namespace Time
                 }
             }
             FillPeople();
+            readPreferences();
         }
 
         private void btnVideo_Click(object sender, EventArgs e)
@@ -301,11 +376,6 @@ namespace Time
         private void secilenKlasorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start(location);
-        }
-
-        private void btnRefresh_Click(object sender, EventArgs e)
-        {
-            OpenExcel();
         }
 
         private void startDate_ValueChanged(object sender, EventArgs e)
@@ -406,6 +476,18 @@ namespace Time
         {
 
             Process.Start(Directory.GetCurrentDirectory());
+        }
+
+        private void Form1_FormClosing_1(object sender, FormClosingEventArgs e)
+        {
+            Preference pref = new Preference() {
+                person = cbxPerson.SelectedItem.ToString(),
+                interval = chkInterval.Checked,
+                now = rbNow.Checked,
+                remind = cbRemind.Checked,
+                remindBefore = Int32.Parse(cbxRemind.Text),
+            };
+            File.WriteAllText(prefLocation, JsonConvert.SerializeObject(pref));
         }
 
         private void cbxRemind_SelectedIndexChanged(object sender, EventArgs e)
@@ -551,9 +633,10 @@ namespace Time
                     if(s[count] != null)
                         count++;
                     string[] dates = currentCell.Split(' ');
-                    for (int j = i + 1; (currentCell =  e[ov].ReadCell(j, 1).ToString()).Contains("."); j++) 
+                    for (int j = i + 1; Double.TryParse(currentCell =  e[ov].ReadCell(j, 1).ToString(), out var result); j++) 
                     {
                         lastJ++;
+                        currentCell = result.ToString();
                         if (e[ov].ReadCell(j, 6).ToString() == "-") continue;
                         if(s[count] == null)
                             s[count] = new Single(tmpString[ov]);
@@ -581,18 +664,14 @@ namespace Time
                     //    s[count].SetAll(new DateTime(Convert.ToInt32(dates[2]), Convert.ToInt32(WhichMonth((Month)Enum.Parse(typeof(Month), dates[1]))), Convert.ToInt32(dates[0]), Convert.ToInt32(Convert.ToDouble(currentTime) * 24), 0, 0), e[ov].ReadCell(j, 3).ToString(), e[ov].ReadCell(j, 6).ToString().Split('-')[1].Trim(), e[ov].ReadCell(j, 4).ToString());
                     //}
                 }
-
                 e[ov].Quit();
             }
-            Console.WriteLine();
-                List<Single> nS = new List<Single>();
+            List<Single> nS = new List<Single>();
             for(int i = 0; s[i] != null; i++)
                 if (s[i].date[0] != DateTime.MinValue)
                     nS.Add(s[i]);
             s = nS.ToArray();
             Array.Sort(s, (a, b) => a.date[0].CompareTo(b.date[0]));
-
-           
             Single[] expandedS = new Single[SIZE];
             for (int i = 0; i < SIZE; i++)
             {
@@ -601,10 +680,7 @@ namespace Time
                 expandedS[i] = s[i];
             }
             s = expandedS;
-            SaveAll(s); for (int i = 0; s[i] != null; i++)
-            {
-                Console.WriteLine(s[i].date[0].Month + " " + s[i].date[0].Day);
-            }
+            SaveAll(s);
             SetCursor(false);
             SetLblInfoText("Tamamlandi.");
         }

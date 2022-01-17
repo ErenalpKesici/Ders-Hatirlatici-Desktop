@@ -80,12 +80,16 @@
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4420.1017\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -122,12 +126,6 @@
     <Compile Include="FoundResults.Designer.cs">
       <DependentUpon>FoundResults.cs</DependentUpon>
     </Compile>
-    <Compile Include="Grid.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Grid.Designer.cs">
-      <DependentUpon>Grid.cs</DependentUpon>
-    </Compile>
     <Compile Include="GridNotFound.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -158,6 +156,7 @@
     <Compile Include="Popup.Designer.cs">
       <DependentUpon>Popup.cs</DependentUpon>
     </Compile>
+    <Compile Include="Preference.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Check.resx">
@@ -171,9 +170,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FoundResults.resx">
       <DependentUpon>FoundResults.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Grid.resx">
-      <DependentUpon>Grid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GridNotFound.resx">
       <DependentUpon>GridNotFound.cs</DependentUpon>
@@ -192,20 +188,20 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -218,6 +214,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo.ico" />
+    <None Include="res\list_bullets_icon.png" />
+    <None Include="res\toolbar_find.ico" />
+    <None Include="res\output-onlinepngtools %286%29.png" />
+    <None Include="Resources\search-find-magnifying-glass-zoom-comments-simple-magnifying-glass-ico-11562957434phoqdn5owm.png" />
     <None Include="res\audio.ico" />
     <None Include="res\mute.ico" />
     <None Include="res\refresh.ico" />

@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.BUL = new System.Windows.Forms.Button();
             this.lblDate = new System.Windows.Forms.Label();
             this.dtpStart = new System.Windows.Forms.DateTimePicker();
             this.rbNow = new System.Windows.Forms.RadioButton();
@@ -54,31 +53,16 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblInfo = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.BUL = new System.Windows.Forms.Button();
             this.btnVideo = new System.Windows.Forms.Button();
             this.ntiTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cbxRemind = new System.Windows.Forms.ComboBox();
             this.cbRemind = new System.Windows.Forms.CheckBox();
             this.lblRemind = new System.Windows.Forms.Label();
-            this.btnRefresh = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // BUL
-            // 
-            this.BUL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BUL.BackColor = System.Drawing.Color.Honeydew;
-            this.BUL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BUL.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BUL.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.BUL.Location = new System.Drawing.Point(451, 18);
-            this.BUL.Name = "BUL";
-            this.BUL.Size = new System.Drawing.Size(347, 135);
-            this.BUL.TabIndex = 0;
-            this.BUL.Text = "Dersi Bul";
-            this.BUL.UseVisualStyleBackColor = false;
-            this.BUL.Click += new System.EventHandler(this.findNow);
             // 
             // lblDate
             // 
@@ -97,7 +81,7 @@
             this.dtpStart.CalendarTrailingForeColor = System.Drawing.SystemColors.ButtonShadow;
             this.dtpStart.CustomFormat = "MMMM dd, yyyy  |  hh:00";
             this.dtpStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpStart.Location = new System.Drawing.Point(144, 59);
+            this.dtpStart.Location = new System.Drawing.Point(130, 60);
             this.dtpStart.Name = "dtpStart";
             this.dtpStart.Size = new System.Drawing.Size(299, 26);
             this.dtpStart.TabIndex = 3;
@@ -115,7 +99,7 @@
             this.rbNow.Size = new System.Drawing.Size(99, 29);
             this.rbNow.TabIndex = 6;
             this.rbNow.TabStop = true;
-            this.rbNow.Text = "Simdiki";
+            this.rbNow.Text = "Şimdiki";
             this.rbNow.UseVisualStyleBackColor = false;
             this.rbNow.CheckedChanged += new System.EventHandler(this.rbNow_CheckedChanged);
             // 
@@ -129,7 +113,7 @@
             this.rbClosest.Name = "rbClosest";
             this.rbClosest.Size = new System.Drawing.Size(157, 29);
             this.rbClosest.TabIndex = 7;
-            this.rbClosest.Text = "En Yakindaki";
+            this.rbClosest.Text = "En Yakındaki";
             this.rbClosest.UseVisualStyleBackColor = false;
             this.rbClosest.CheckedChanged += new System.EventHandler(this.rbClosest_CheckedChanged);
             // 
@@ -152,9 +136,12 @@
             this.btnList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnList.Font = new System.Drawing.Font("Comic Sans MS", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnList.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnList.Image = ((System.Drawing.Image)(resources.GetObject("btnList.Image")));
+            this.btnList.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnList.Location = new System.Drawing.Point(451, 41);
             this.btnList.Name = "btnList";
-            this.btnList.Size = new System.Drawing.Size(351, 133);
+            this.btnList.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.btnList.Size = new System.Drawing.Size(347, 133);
             this.btnList.TabIndex = 10;
             this.btnList.Text = "Tarihdeki Dersleri Listele";
             this.btnList.UseVisualStyleBackColor = false;
@@ -179,7 +166,7 @@
             this.cikisToolStripMenuItem});
             this.dosyaToolStripMenuItem.Name = "dosyaToolStripMenuItem";
             this.dosyaToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
-            this.dosyaToolStripMenuItem.Text = "Ozellikler";
+            this.dosyaToolStripMenuItem.Text = "Özellikler";
             // 
             // programKlasorunuAcToolStripMenuItem
             // 
@@ -211,11 +198,11 @@
             this.lblStart.AutoSize = true;
             this.lblStart.BackColor = System.Drawing.Color.Transparent;
             this.lblStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStart.Location = new System.Drawing.Point(22, 61);
+            this.lblStart.Location = new System.Drawing.Point(28, 62);
             this.lblStart.Name = "lblStart";
-            this.lblStart.Size = new System.Drawing.Size(96, 24);
+            this.lblStart.Size = new System.Drawing.Size(91, 24);
             this.lblStart.TabIndex = 12;
-            this.lblStart.Text = "Baslangic:";
+            this.lblStart.Text = "Başlangıç";
             this.lblStart.Visible = false;
             // 
             // btnSum
@@ -227,9 +214,9 @@
             this.btnSum.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnSum.Location = new System.Drawing.Point(12, 359);
             this.btnSum.Name = "btnSum";
-            this.btnSum.Size = new System.Drawing.Size(371, 66);
+            this.btnSum.Size = new System.Drawing.Size(431, 66);
             this.btnSum.TabIndex = 13;
-            this.btnSum.Text = "Toplam Ders Sayisi Hesaplama";
+            this.btnSum.Text = "Toplam Ders Sayısı Hesaplama";
             this.btnSum.UseVisualStyleBackColor = false;
             this.btnSum.Click += new System.EventHandler(this.btnSum_Click);
             // 
@@ -241,7 +228,7 @@
             this.dtpEnd.CalendarTitleForeColor = System.Drawing.SystemColors.ButtonFace;
             this.dtpEnd.CalendarTrailingForeColor = System.Drawing.SystemColors.ButtonShadow;
             this.dtpEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpEnd.Location = new System.Drawing.Point(144, 125);
+            this.dtpEnd.Location = new System.Drawing.Point(130, 126);
             this.dtpEnd.Name = "dtpEnd";
             this.dtpEnd.Size = new System.Drawing.Size(299, 26);
             this.dtpEnd.TabIndex = 14;
@@ -253,11 +240,11 @@
             this.chkInterval.AutoSize = true;
             this.chkInterval.BackColor = System.Drawing.Color.Transparent;
             this.chkInterval.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkInterval.Location = new System.Drawing.Point(25, 126);
+            this.chkInterval.Location = new System.Drawing.Point(12, 124);
             this.chkInterval.Name = "chkInterval";
             this.chkInterval.Size = new System.Drawing.Size(113, 28);
             this.chkInterval.TabIndex = 15;
-            this.chkInterval.Text = "Aralik Sec";
+            this.chkInterval.Text = "Aralık Seç";
             this.chkInterval.UseVisualStyleBackColor = false;
             this.chkInterval.CheckedChanged += new System.EventHandler(this.chkInterval_CheckedChanged);
             // 
@@ -308,6 +295,24 @@
             this.panel2.Size = new System.Drawing.Size(810, 173);
             this.panel2.TabIndex = 20;
             // 
+            // BUL
+            // 
+            this.BUL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BUL.BackColor = System.Drawing.Color.Ivory;
+            this.BUL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BUL.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BUL.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.BUL.Image = ((System.Drawing.Image)(resources.GetObject("BUL.Image")));
+            this.BUL.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BUL.Location = new System.Drawing.Point(507, 18);
+            this.BUL.Name = "BUL";
+            this.BUL.Size = new System.Drawing.Size(291, 135);
+            this.BUL.TabIndex = 0;
+            this.BUL.Text = "Dersi Bul";
+            this.BUL.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.BUL.UseVisualStyleBackColor = false;
+            this.BUL.Click += new System.EventHandler(this.findNow);
+            // 
             // btnVideo
             // 
             this.btnVideo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -315,9 +320,9 @@
             this.btnVideo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnVideo.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnVideo.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnVideo.Location = new System.Drawing.Point(389, 359);
+            this.btnVideo.Location = new System.Drawing.Point(451, 359);
             this.btnVideo.Name = "btnVideo";
-            this.btnVideo.Size = new System.Drawing.Size(413, 66);
+            this.btnVideo.Size = new System.Drawing.Size(351, 66);
             this.btnVideo.TabIndex = 21;
             this.btnVideo.Text = "Ders Video Kontrol";
             this.btnVideo.UseVisualStyleBackColor = false;
@@ -378,18 +383,6 @@
             this.lblRemind.Text = "dakika kalinca";
             this.lblRemind.Visible = false;
             // 
-            // btnRefresh
-            // 
-            this.btnRefresh.FlatAppearance.BorderSize = 0;
-            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRefresh.Image = global::Time.Properties.Resources.refresh4;
-            this.btnRefresh.Location = new System.Drawing.Point(82, 0);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(36, 28);
-            this.btnRefresh.TabIndex = 22;
-            this.btnRefresh.UseVisualStyleBackColor = true;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -399,7 +392,6 @@
             this.Controls.Add(this.lblRemind);
             this.Controls.Add(this.cbRemind);
             this.Controls.Add(this.cbxRemind);
-            this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.btnVideo);
             this.Controls.Add(this.lblStart);
             this.Controls.Add(this.panel2);
@@ -419,7 +411,8 @@
             this.MinimumSize = new System.Drawing.Size(500, 256);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Ders Hatirlatici";
+            this.Text = "Ders Hatırlatıcı";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing_1);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Resize += new System.EventHandler(this.Form1_Resize);
             this.menuStrip1.ResumeLayout(false);
@@ -459,7 +452,6 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label lblInfo;
         private System.Windows.Forms.Button btnVideo;
-        private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.NotifyIcon ntiTray;
         private System.Windows.Forms.ComboBox cbxRemind;
         private System.Windows.Forms.CheckBox cbRemind;

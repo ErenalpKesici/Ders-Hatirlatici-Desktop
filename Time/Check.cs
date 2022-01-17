@@ -36,7 +36,7 @@ namespace Time
             int k = 0;
             for (int i = 0; Form1.s[i] != null; i++)
             {
-                for (int j = 0; Form1.s[i].person[j] != null; j++)
+                for (int j = 0; j < Form1.s[i].person.Count(); j++)
                 {
                     if (Form1.s[i].person[j].Length < 3) continue;
                     for (int t = 0; people[t] != null; t++)
@@ -213,7 +213,7 @@ namespace Time
             List<string> directs = GetDirects();
             listToCheck = new List<MeList>();
             for (int i = 0; Form1.s[i] != null; i++)
-                for(int j=0;Form1.s[i].date[j] != DateTime.MinValue; j++)
+                for(int j=0;j < Form1.s[i].date.Count(); j++)
                     if (Form1.s[i].type[j] == "ÖE" && Form1.s[i].person[j].Equals(selectedPerson) && Form1.s[i].date[j].CompareTo(dtStart.Value.Date) > -1 && Form1.s[i].date[j].CompareTo(dtEnd.Value.Date) < 1)
                         listToCheck.Add(new MeList(Form1.s[i].date[j], Form1.s[i].date[j].Hour, Form1.s[i].classroom));
             listNotFound = new List<MeList>();

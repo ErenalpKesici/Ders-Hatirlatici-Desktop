@@ -19,7 +19,7 @@ namespace Time.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -93,6 +93,36 @@ namespace Time.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap list_bullets_icon {
+            get {
+                object obj = ResourceManager.GetObject("list_bullets_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap list_bullets_icon1 {
+            get {
+                object obj = ResourceManager.GetObject("list_bullets_icon1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap list_bullets_icon2 {
+            get {
+                object obj = ResourceManager.GetObject("list_bullets_icon2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap mute {
             get {
                 object obj = ResourceManager.GetObject("mute", resourceCulture);
@@ -156,6 +186,27 @@ namespace Time.Properties {
         internal static System.Drawing.Bitmap refresh4 {
             get {
                 object obj = ResourceManager.GetObject("refresh4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap search_find_magnifying_glass_zoom_comments_simple_magnifying_glass_ico_11562957434phoqdn5owm {
+            get {
+                object obj = ResourceManager.GetObject("search-find-magnifying-glass-zoom-comments-simple-magnifying-glass-ico-1156295743" +
+                        "4phoqdn5owm", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap toolbar_find {
+            get {
+                object obj = ResourceManager.GetObject("toolbar_find", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
